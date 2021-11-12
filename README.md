@@ -1,6 +1,5 @@
-# Created using React App
-
-This project was bootstrapped with React.
+# A pathfinding project inspired by Clément Mihailescu
+This project was created using React/JSX and was inspired by Youtuber Clément Mihailescu. No code was copied from his video. I was curious if I was able to recreate his project. So far the project has been successful.
 
 ## Usage
 
