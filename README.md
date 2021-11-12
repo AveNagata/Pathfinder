@@ -11,4 +11,6 @@ There is a known bug in this version that causes a crash if you deselect the wal
 
 ## Algorithms
 Pathfinding: Dijkstra's
+
+
 Maze Generation: Prim's
