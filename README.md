@@ -1,5 +1,5 @@
 # A pathfinding project inspired by Clément Mihailescu
-This project was created using React/JSX and was inspired by Youtuber Clément Mihailescu. No code was copied from his video. I was curious if I was able to recreate his project. So far the project has been successful.
+This project was created using React/JSX and was inspired by Youtuber Clément Mihailescu. The only code that was copied from his video was using map on the nodes to generate the grid. I was curious if I was able to recreate his project. So far the project has been successful.
 
 ## Usage
 
