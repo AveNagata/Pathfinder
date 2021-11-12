@@ -2,7 +2,7 @@ var neighborFound = false;
 
 export function primGen(nodes) {
 
-    generateWalls(nodes);
+    generateWalls(nodes, 1);
     let startRowIdx = 0;
     let startColIdx = 0;
     while (startRowIdx < 3 || startRowIdx > nodes.length - 1) {
@@ -130,11 +130,27 @@ function getVisitedNeighbors(nodes, neighbors, passageNodes) {
 
 
 
-function generateWalls(nodes) {
-    for (let rows = 0; rows < nodes.length; rows++) {
-        for (let cols = 0; cols < nodes[0].length; cols++) {
-            if (cols === 0 || rows === 0 || rows === nodes.length - 1 || cols === nodes[0].length - 1) {
-                nodes[rows][cols].isVisited = true;
+export function generateWalls(nodes, single) {
+    if (single == 0) {
+        for (let rows = 0; rows < nodes.length; rows++) {
+            for (let cols = 0; cols < nodes[0].length; cols++) {
+                if (cols === 0 || rows === 0 || cols === 1 || rows === 1 || rows === nodes.length - 1 || cols === nodes[0].length - 1 || rows === nodes.length - 2 || cols === nodes[0].length - 2) {
+                    nodes[rows][cols].isVisited = true;
+                    nodes[rows][cols].isPassage= false;
+                    nodes[rows][cols].isBorder = true;
+                    nodes[rows][cols].isPath= false;
+                    nodes[rows][cols].isWall = true;
+                }
+            }
+        }
+    }
+    else {
+        for (let rows = 0; rows < nodes.length; rows++) {
+            for (let cols = 0; cols < nodes[0].length; cols++) {
+                if (cols === 0 || rows === 0 || rows === nodes.length - 1 || cols === nodes[0].length - 1) {
+                    nodes[rows][cols].isVisited = true;
+                    nodes[rows][cols].isWall = true;
+                }
             }
         }
     }

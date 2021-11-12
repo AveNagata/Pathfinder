@@ -2,7 +2,7 @@ import React from 'react'
 import './Node.css'
 
 const Node = (props) => {
-    const {isStart, isFinish, isWall, isPassage, isPath, isSolution, row, col, onMouseDown, onMouseUp} = props
+    const {isStart, isFinish, isWall, isPassage, isPath, isSolution, row, col, onMouseDown, onMouseUp, onMouseOver} = props
     const objPoint = 
     isFinish ? 'node-finish'
     : isStart
@@ -18,7 +18,7 @@ const Node = (props) => {
     : "";
 
     return (
-        <div onMouseDown={() => onMouseDown(row, col)} onMouseUp={() => onMouseUp(row, col)} className={`node ${row}-${col} ${objPoint}`}>
+        <div onMouseOver={() => onMouseOver(row, col)} onMouseDown={() => onMouseDown(row, col)} onMouseUp={() => onMouseUp(row, col)} className={`node ${row}-${col} ${objPoint}`}>
             
         </div>
     )

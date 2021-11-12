@@ -6,10 +6,6 @@
     margin-bottom: -2px;
 }
 
-.node:hover {
-    transform: scale(1.2);
-}
-
 .node-start {
     background-color: green;
 }
@@ -21,6 +17,7 @@
 .node-wall {
     background-color: grey;
 }
+
 
 .node-passage {
     background-color: none;
@@ -36,6 +33,9 @@
     animation-play-state: running;
 }
 
+.node-passage:hover {
+    transform: scale(1.2);
+}
 
 @keyframes pathAnimation {
     0% {

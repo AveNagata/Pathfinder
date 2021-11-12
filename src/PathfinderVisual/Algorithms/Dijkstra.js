@@ -2,7 +2,9 @@ export function dijkstra(nodes) {
 
     let pathSoFar = [];
     let pathFound = false;
-
+    let finishFound = false;
+    let counter = 0;
+    
     for (let rows = 0; rows < nodes.length; rows++) {
         for (let cols = 0; cols < nodes[0].length; cols++) {
             nodes[rows][cols].isVisited = false;
@@ -18,7 +20,9 @@ export function dijkstra(nodes) {
 
     while (!pathFound) {
         for (let node = 0; node < pathSoFar.length; node++) {
+            counter++;
             if (nodes[pathSoFar[node].row + 1][pathSoFar[node].col].isVisited === false && nodes[pathSoFar[node].row + 1][pathSoFar[node].col].isPassage === true) {
+                counter = 0;
                 nodes[pathSoFar[node].row + 1][pathSoFar[node].col].isVisited = true;
                 pathSoFar.push(nodes[pathSoFar[node].row + 1][pathSoFar[node].col]);
                 if (node === 0) {
@@ -28,11 +32,13 @@ export function dijkstra(nodes) {
                     pathSoFar[pathSoFar.length - 1].distance = pathSoFar[node].distance + 1;
                 }
                 if (pathSoFar[pathSoFar.length - 1].isFinish === true) {
+                    finishFound = true;
                     pathFound = true;
                     break;
                 }
             }
             if (nodes[pathSoFar[node].row - 1][pathSoFar[node].col].isVisited === false && nodes[pathSoFar[node].row - 1][pathSoFar[node].col].isPassage === true) {
+                counter = 0;
                 nodes[pathSoFar[node].row - 1][pathSoFar[node].col].isVisited= true;
                 pathSoFar.push(nodes[pathSoFar[node].row - 1][pathSoFar[node].col]);
                 if (node === 0) {
@@ -42,11 +48,13 @@ export function dijkstra(nodes) {
                     pathSoFar[pathSoFar.length - 1].distance = pathSoFar[node].distance + 1;
                 }
                 if (pathSoFar[pathSoFar.length - 1].isFinish === true) {
+                    finishFound = true;
                     pathFound = true;
                     break;
                 }
             }
             if (nodes[pathSoFar[node].row][pathSoFar[node].col + 1].isVisited === false && nodes[pathSoFar[node].row][pathSoFar[node].col + 1].isPassage === true) {
+                counter = 0;
                 nodes[pathSoFar[node].row][pathSoFar[node].col + 1].isVisited = true;
                 pathSoFar.push(nodes[pathSoFar[node].row][pathSoFar[node].col + 1]);
                 if (node === 0) {
@@ -56,11 +64,13 @@ export function dijkstra(nodes) {
                     pathSoFar[pathSoFar.length - 1].distance = pathSoFar[node].distance + 1;
                 }
                 if (pathSoFar[pathSoFar.length - 1].isFinish === true) {
+                    finishFound = true;
                     pathFound = true;
                     break;
                 }
             }
             if (nodes[pathSoFar[node].row][pathSoFar[node].col - 1].isVisited === false && nodes[pathSoFar[node].row][pathSoFar[node].col - 1].isPassage === true) {
+                counter = 0;
                 nodes[pathSoFar[node].row][pathSoFar[node].col - 1].isVisited = true;
                 pathSoFar.push(nodes[pathSoFar[node].row][pathSoFar[node].col - 1]);
                 if (node === 0) {
@@ -70,12 +80,15 @@ export function dijkstra(nodes) {
                     pathSoFar[pathSoFar.length - 1].distance = pathSoFar[node].distance + 1;
                 }
                 if (pathSoFar[pathSoFar.length - 1].isFinish === true) {
+                    finishFound = true;
                     pathFound = true;
                     break;
                 }
             }
         }
-
+        if (counter > pathSoFar.length) {
+            break;
+        }
     }
 
     for (let node = 0; node < pathSoFar.length; node++) {
@@ -121,5 +134,5 @@ export function dijkstra(nodes) {
         nodes[shortestPath[node].row][shortestPath[node].col].isSolution = false;
     }
     
-    return [pathSoFar, shortestPath];
+    return [pathSoFar, shortestPath, finishFound];
 }
