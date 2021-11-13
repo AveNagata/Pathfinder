@@ -28,32 +28,50 @@ isWall = is used in prims to generate paths
 row/col if else check used to generate start and end points on page load/reset
 -----------------------------------------------------------------*/
 const ButtonContainer = styled.nav`
-    height: 100px;
+    height: 60px;
     width: 100%;
     display: flex;
-    justify-content: center;
     top: 0;
     z-index: 1;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid palevioletred;
     margin-bottom: 0px;
+    background: #f9f9f9;
 `
 
 const Button = styled.button`
     color: palevioletred;
     margin-left: 20px;
-    margin-top: 10px;
-    width: 200px;
-    font-size: 1.2em;
-    height: 75%;
+    margin-top: 12px;
+    width: 180px;
+    font-size: 1.1em;
+    height: 60%;
     padding: 0.25em 1em;
     border: 2px solid palevioletred;
-    border-radius: 3px;
+    border-radius: 10px;
     
     :disabled {
         color: black;
         background-color: grey;
         border: 2px solid black;
     }
+
+    :hover {
+        transform: scale(1.05);
+    }
+
+    :active {
+        color: black;
+        border: 2px solid black;
+    }
+`
+const ContainerHeader = styled.h1`
+    color: palevioletred;
+    margin-left: 24px;
+    margin-right: 250px;
+    justify-self: flex-start;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 `
 
 function genNodes(walls) {
@@ -140,7 +158,7 @@ function genNodes(walls) {
 /* This is the function component that is being rendered, the main functionality lies here */
 const PathfinderVisual = () => {
     
-    let [moving, setMoving] = useState(false);
+    //let [moving, setMoving] = useState(false);
     
     // On first pass, generate nodes, mark them all as passages, and create the boundary, start, and end points
     if (drawGrid) {
@@ -206,6 +224,9 @@ const PathfinderVisual = () => {
         const resetButton = document.getElementById("Reset");
         resetButton.disabled = true;
 
+        const clearButton = document.getElementById("Clear");
+        clearButton.disabled = true;
+
         beingDrawn = true;;
         pathSoFar = dijkstra(nodes);
         
@@ -243,6 +264,8 @@ const PathfinderVisual = () => {
                 function(value) {
                     const genButton = document.getElementById("Generate");
                     const resetButton = document.getElementById("Reset");
+                    const clearButton = document.getElementById("Clear");
+                    clearButton.disabled = false;
                     resetButton.disabled = false;
                     genButton.disabled = false;
                     beingDrawn = false;
@@ -263,6 +286,8 @@ const PathfinderVisual = () => {
                 const genButton = document.getElementById("Generate");
                 const visualizeButton = document.getElementById("Visualize");
                 const resetButton = document.getElementById("Reset");
+                const clearButton = document.getElementById("Clear");
+                clearButton.disabled = true;
                 resetButton.disabled = true;
                 genButton.disabled = true;
                 visualizeButton.disabled = true;
@@ -276,6 +301,8 @@ const PathfinderVisual = () => {
                 const genButton = document.getElementById("Generate");
                 const visualizeButton = document.getElementById("Visualize");
                 const resetButton = document.getElementById("Reset");
+                const clearButton = document.getElementById("Clear");
+                clearButton.disabled = true;
                 resetButton.disabled = true;
                 genButton.disabled = true;
                 visualizeButton.disabled = true;
@@ -302,6 +329,8 @@ const PathfinderVisual = () => {
 
                     const genButton = document.getElementById("Generate");
                     const resetButton = document.getElementById("Reset");
+                    const clearButton = document.getElementById("Clear");
+                    clearButton.disabled = false;
                     resetButton.disabled = false;
                     genButton.disabled = false;
 
@@ -319,6 +348,8 @@ const PathfinderVisual = () => {
 
                     const genButton = document.getElementById("Generate");
                     const resetButton = document.getElementById("Reset");
+                    const clearButton = document.getElementById("Clear");
+                    clearButton.disabled = false;
                     resetButton.disabled = false;
                     genButton.disabled = false;
 
@@ -370,6 +401,20 @@ const PathfinderVisual = () => {
         solved = false;
         setState({nodes});
     }
+
+    // Go through pat
+    function clearGrid () {
+        objTransition = 0;
+        const visualizeButton = document.getElementById("Visualize");
+        visualizeButton.disabled = false;
+        solved = false;
+        for (let i = 0; i < pathSoFar[0].length; i++) {
+            nodes[pathSoFar[0][i].row][pathSoFar[0][i].col].isVisited = false;
+            nodes[pathSoFar[0][i].row][pathSoFar[0][i].col].isPath = false;
+            nodes[pathSoFar[0][i].row][pathSoFar[0][i].col].isPassage = true;
+        }
+        setState({nodes});
+    }
     
     // Functionality to toggle walls on and off
     function toggleWalls(row, col) {
@@ -396,9 +441,11 @@ const PathfinderVisual = () => {
     return (
         <div onMouseMove={e => handleMove(e)}>
         <ButtonContainer>
-        <Button id="Generate" onClick={genMaze}>Generate Maze</Button>
-        <Button id="Visualize" onClick={visualizeDijsktra}>Visualize Dizkstra</Button>
-        <Button id="Reset" onClick={resetGrid}>Reset</Button>
+            <ContainerHeader>Pathfinding Visualizer</ContainerHeader>
+            <Button id="Generate" onClick={genMaze}>Generate Maze</Button>
+            <Button id="Visualize" onClick={visualizeDijsktra}>Visualize Dijkstra</Button>
+            <Button id="Reset" onClick={resetGrid}>Reset</Button>
+            <Button id="Clear" onClick={clearGrid}>Clear</Button>
         <div className = "node-hidden" ></div>
         </ButtonContainer>
             <div onMouseLeave={mouseLeftGrid} className = "grid">
